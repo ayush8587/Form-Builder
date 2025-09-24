@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Form Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <div id="new-form-screen">
+    <h2>Create New Form</h2>
+    <p>Choose a method to create your new form:</p>
+    <button id="ai-option-button">
+        ✨ AI Form Generator
+    </button>
+    <!-- Placeholder for other potential methods -->
+    <!-- <button>Start from Scratch</button> -->
+    <!-- <button>Use a Template</button> -->
+  </div>
+
+  <div id="enter-form-name-screen" style="display: none;">
+    <h2>Name Your AI Form</h2>
+    <label for="form-name-input">Form Name:</label><br>
+    <input type="text" id="form-name-input" placeholder="e.g., Patient Intake Form">
+    <button id="create-form-button">Create Form</button>
+    <div id="loading-indicator" style="display: none;">
+        <p>Creating form...</p>
+    </div>
+    <div id="result-area"></div>
+  </div>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>
