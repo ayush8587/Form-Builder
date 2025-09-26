@@ -1,51 +1,31 @@
-from flask import Flask, request, jsonify
+import streamlit as st
+import requests
+import json
+import time
+import uuid
 from function import create_form_from_name
-from flask import send_from_directory
 
+st.title("AI Form Generator")
 
+st.write("This app creates a form using a static schema and provides a preview link.")
 
-app = Flask(__name__)
+form_name = st.text_input("Enter Form Name:", placeholder="e.g., Customer Feedback Survey")
 
-# Keep the existing create_form_from_name function as is.
-# It already contains the logic for API calls and error handling.
-# from previous_code import create_form_from_name # Assuming create_form_from_name is in a separate file
-
-@app.route('/')
-def serve_index():
-    return send_from_directory('frontend', 'index.html')
-
-@app.route('/<path:filename>')
-def serve_static(filename):
-    return send_from_directory('frontend', filename)
-
-@app.route('/create_form', methods=['POST'])
-def handle_create_form_request():
-    """
-    Handles the form creation request from the frontend via a POST request.
-    Expects a JSON body with a 'form_name' key.
-    """
-    data = request.get_json()
-    if not data or 'form_name' not in data:
-        return jsonify({"status": "failure", "error": "Missing 'form_name' in request body"}), 400
-
-    form_name = data['form_name']
-    print(f"Received form creation request for name: {form_name}")
-
-    result = create_form_from_name(form_name)
-
-    if isinstance(result, str):
-        # Success: result is the form preview URL
-        print(f"Form created successfully. URL: {result}")
-        return jsonify({"status": "success", "form_url": result}), 200
-    elif isinstance(result, dict) and 'error' in result:
-        # Failure: result is an error dictionary
-        print(f"Form creation failed: {result['error']}")
-        # Determine appropriate HTTP status code based on the error type if possible
-        return jsonify({"status": "failure", "error": result['error']}), 500 # Internal Server Error for API issues
+if st.button("Create Form"):
+    if not form_name:
+        st.warning("Please enter a form name.")
     else:
-        # Unexpected return type from create_form_from_name
-        print(f"Unexpected result from create_form_from_name: {result}")
-        return jsonify({"status": "failure", "error": "An unexpected error occurred during form creation."}), 500
+        st.info("Creating form...")
+        result = create_form_from_name(form_name)
 
-if __name__ == '__main__':
-    app.run(port=5000)
+
+        if isinstance(result, str):
+            st.success("Form created successfully!")
+            st.write("Form Preview Link:")
+            st.markdown(f"[{result}]({result})")
+        elif isinstance(result, dict) and 'error' in result:
+            st.error(f"Form creation failed: {result['error']}")
+        else:
+            st.error("An unexpected error occurred during form creation.")
+
+# to create a basic UI within Colab itself.
