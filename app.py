@@ -24,7 +24,7 @@ if st.button("Create Form"):
         st.warning("Please enter a form name.")
     else:
         st.info("Creating form...")
-        result = create_form_from_name(form_name, team_bot_id, auth_key)
+        result = create_form_from_name(form_name)
 
 
         if isinstance(result, str):
@@ -35,4 +35,5 @@ if st.button("Create Form"):
             st.error(f"Form creation failed: {result['error']}")
         else:
             st.error("An unexpected error occurred during form creation.")
+
 
