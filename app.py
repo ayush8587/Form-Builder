@@ -16,11 +16,11 @@ st.write("This app creates a form using a static schema and provides a preview l
 form_name = st.text_input("Enter Form Name:", placeholder="e.g., Customer Feedback Survey")
 
 if st.button("Create Form"):
-    if not team_bot_id:
-        st.warning("Please enter the Team Bot ID.")
-    elif not auth_key:
-        st.warning("Please enter the Authorization Key.")
-    elif not form_name:
+    # if not team_bot_id:
+    #     st.warning("Please enter the Team Bot ID.")
+    # elif not auth_key:
+    #     st.warning("Please enter the Authorization Key.")
+    if not form_name:
         st.warning("Please enter a form name.")
     else:
         st.info("Creating form...")
@@ -35,5 +35,6 @@ if st.button("Create Form"):
             st.error(f"Form creation failed: {result['error']}")
         else:
             st.error("An unexpected error occurred during form creation.")
+
 
 
