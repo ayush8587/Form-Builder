@@ -4,7 +4,7 @@ import time
 import uuid
 
 
-def create_form_from_name(form_name):
+def create_form_from_name(form_name, team_bot_id, auth_key):
     """
     Generates an API payload with a static schema, makes an API call
     to create a form, and extracts the form preview URL.
@@ -43,11 +43,11 @@ def create_form_from_name(form_name):
         ]
     },
         "settings": {},
-        "teamBotId": TEAM_BOT_ID
+        "teamBotId": f"{team_bot_id}"
     }
     api_url = "https://formapi.emitrr.com/forms"
     headers = {
-        "Authorization": AUTH_KEY }
+        "Authorization": f"{auth_key}" }
 
     print(f"Attempting to create form via API: {form_name}")
     try:
@@ -73,5 +73,5 @@ def create_form_from_name(form_name):
     except Exception as e:
         print(f"An unexpected error occurred during form creation API call: {e}")
         return {"error": f"An unexpected error occurred: {e}"}
-# print(f"\nResult of creating '{test_form_name}': {preview_url}")
+
 
